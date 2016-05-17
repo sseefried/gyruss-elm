@@ -92,11 +92,13 @@ update msg g =
              b' =
                case s.blaster of
                  Just (d, ang') ->
-                   if d > shipCircleRadius then Nothing else Just (d + blasterVel*delta, ang')
+                   if d > shipCircleRadius
+                     then Nothing
+                     else Just (d + blasterVel*delta, ang')
                  Nothing -> b
          in  { g | ship = ship'}
 
-----------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------
 -- VIEW
 
 view : Game -> Html Msg
@@ -143,14 +145,13 @@ txt f string =
     |> f
     |> leftAligned
 
+--------------------------------------------------------------------------
 -- WIRING
 
 keyboardProcessor down keyCode =
   case (down, keyCode) of
     (True, 32) -> Fire
     _          -> NoOp
-
--- SIGNALS
 
 main =
   App.program
@@ -168,23 +169,7 @@ main =
 
   }
 
-
---gameState : Signal Game
---gameState =
---  Signal.foldp update defaultGame input
-
-
---delta =
---  Signal.map inSeconds (fps 35)
-
---input : Signal Input
---input =
---  Signal.sampleOn delta <|
---    Signal.map3 Input
---      Mouse.isDown
---      (Signal.map2 mouseToWorld Window.dimensions Mouse.position)
---      delta
-
+--------------------------------------------------------------------------
 -- UTILITIES
 
 mouseToWorld : Mouse.Position -> Size -> (Float, Float)
